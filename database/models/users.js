@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/test');
-const Schema = new mongoose.Schema();
+mongoose.connect('mongodb://localhost/27016');
+const { Schema } = mongoose;
 
 
 const db = mongoose.connection;
