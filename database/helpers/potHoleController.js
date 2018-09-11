@@ -22,3 +22,5 @@ module.exports.addPotHoleMarker = function ({ lat, long, rating_mean, last_repor
   })
 
 };
+
+

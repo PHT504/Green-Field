@@ -14,3 +14,22 @@ module.exports.addUser = function ({ username }, callback){
     callback(err);
   })
 };
+
+module.exports.selectUser = function (username, callback){
+
+  const query = User.where({username});
+  query.findOne((err, res) => {
+    if(err){
+      console.error(err);
+      callback(err, res);
+    } else {
+      if(res === null){
+        callback('not found', res);
+      } else {
+        callback(undefined, res);
+      }
+    }
+  });
+  
+
+};
