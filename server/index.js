@@ -3,18 +3,18 @@ const bodyParser = require('body-parser');
 
 const app = express();
 app.use(bodyParser.json());
-app.set("views", "client"); // specify the views directory
-app.set("view engine", "ejs"); 
+app.set('views', 'client'); // specify the views directory
+app.set('view engine', 'ejs');
 
 /*
 LOGIN ***** PRE AUTHENTICATION
 */
 app.get('/', (req, res) => {
-res.render('login');
-})
+  res.render('login');
+});
 
 
-///DURING THE SESSION
+// DURING THE SESSION
 
 
 /*
