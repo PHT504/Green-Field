@@ -29,8 +29,4 @@ module.exports.selectUser = function selectUser(username, callback) {
   });
 };
 
-// create a way to update the users report count attribute
 
-module.exports.updateUserReportCount = function updateUserReportCount(username, callback) {
-  const query = User.where({ username });
-};
