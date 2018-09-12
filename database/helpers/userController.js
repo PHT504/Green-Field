@@ -30,6 +30,20 @@ const selectUser = (username, callback) => {
   });
 };
 
+const updateReportCount = (username, callback) => {
+  let reportCount;
+  selectUser(username, (err, res) => {
+    if (err) {
+      console.log(err);
+    } else {
+      reportCount = res.report_count + 1;
+      User.findOneAndUpdate({ username }, { report_count: reportCount }, callback);
+    }
+  });
+};
+
 module.exports.addUser = addUser;
 
 module.exports.selectUser = selectUser;
+
+module.exports.updateReportCount = updateReportCount;
