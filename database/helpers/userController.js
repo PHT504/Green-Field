@@ -1,7 +1,8 @@
-// this is the user helper function that will be where the server makes its interactions with the users collection for the time being
+// this is the user helper function that will be where the
+// server makes its interactions with the users collection for the time being
 const User = require('../models/users');
 
-module.exports.addUser = function addUser({ username }, callback) {
+const addUser = ({ username }, callback) => {
   const user = new User({
     username,
     report_count: 0,
@@ -15,7 +16,7 @@ module.exports.addUser = function addUser({ username }, callback) {
   });
 };
 
-module.exports.selectUser = function selectUser(username, callback) {
+const selectUser = (username, callback) => {
   const query = User.where({ username });
   query.findOne((err, res) => {
     if (err) {
@@ -29,4 +30,6 @@ module.exports.selectUser = function selectUser(username, callback) {
   });
 };
 
+module.exports.addUser = addUser;
 
+module.exports.selectUser = selectUser;
