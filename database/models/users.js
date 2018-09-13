@@ -12,7 +12,9 @@ db.once('open', () => {
 
 const users = new Schema({
   username: String,
+  password: String,
   report_count: Number,
+  created_at: { type: Date, default: Date.now },
 });
 
 const User = mongoose.model('User', users);
