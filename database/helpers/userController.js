@@ -3,8 +3,7 @@
 const User = require('../models/users');
 
 const selectUser = ({ username }, callback) => {
-  const query = User.where({ username });
-  query.findOne((err, res) => {
+  User.where({ username }).findOne((err, res) => {
     if (err) {
       console.error(err);
       callback(err, res);
@@ -40,9 +39,9 @@ const addUser = ({ username }, callback) => {
 
 const updateReportCount = ({ username }, callback) => {
   let reportCount;
-  selectUser(username, (err, res) => {
+  selectUser({ username }, (err, res) => {
     if (err) {
-      console.log(err);
+      console.log(err, ' line 45');
     } else {
       reportCount = res.report_count + 1;
       User.findOneAndUpdate({ username }, { report_count: reportCount }, callback);

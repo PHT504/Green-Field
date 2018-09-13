@@ -1,5 +1,6 @@
 // this will be where much of the server does its interactions with the pot holes collection
 const PotHole = require('../models/potHoles');
+const userHelp = require('./userController');
 
 const checkForMarker = ({ lat, long }, maxDistance, callback) => {
   console.log(lat, long, 'this is lat and long');
@@ -39,10 +40,16 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
   }, callback,
 ) {
   checkForMarker({ lat, long }, Number(0.0001), (err, res) => {
-    console.log(res);
     if (err) {
       console.error(err);
     } else if (res === null || !res.users.length) {
+      userHelp.updateReportCount({ username }, (er, feedback) => {
+        if (er) {
+          console.error(er, ' line 49');
+        } else {
+          console.log(feedback, ' this is the feedback');
+        }
+      });
       const potHole = new PotHole({
         lat: Number(Number.parseFloat(lat).toFixed(5)),
         long: Number(Number.parseFloat(long).toFixed(5)),
@@ -63,6 +70,13 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
       res.users.push(username);
       res.reported_count += 1;
       res.rating_mean = (res.rating_mean + rating) / res.reported_count;
+      userHelp.updateReportCount({ username }, (er, feedback) => {
+        if (er) {
+          console.error(er, ' line 76');
+        } else {
+          console.log(feedback);
+        }
+      });
       PotHole.findOneAndUpdate({ lat: res.lat, long: res.long },
         {
           users: res.users,
