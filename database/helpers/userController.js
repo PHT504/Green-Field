@@ -2,20 +2,6 @@
 // server makes its interactions with the users collection for the time being
 const User = require('../models/users');
 
-const addUser = ({ username }, callback) => {
-  const user = new User({
-    username,
-    report_count: 0,
-  });
-
-  user.save((err) => {
-    if (err) {
-      console.error(err);
-    }
-    callback(err);
-  });
-};
-
 const selectUser = ({ username }, callback) => {
   const query = User.where({ username });
   query.findOne((err, res) => {
@@ -29,6 +15,28 @@ const selectUser = ({ username }, callback) => {
     }
   });
 };
+
+const addUser = ({ username }, callback) => {
+  selectUser({ username }, (er) => {
+    if (er === 'not found') {
+      const user = new User({
+        username,
+        report_count: 0,
+      });
+      user.save((err) => {
+        if (err) {
+          console.error(err);
+        }
+        callback(err);
+      });
+    } else {
+      console.error(er);
+      console.log('user may already exist');
+      callback(er);
+    }
+  });
+};
+
 
 const updateReportCount = ({ username }, callback) => {
   let reportCount;
