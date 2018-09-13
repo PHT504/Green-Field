@@ -16,7 +16,7 @@ const addUser = ({ username }, callback) => {
   });
 };
 
-const selectUser = (username, callback) => {
+const selectUser = ({ username }, callback) => {
   const query = User.where({ username });
   query.findOne((err, res) => {
     if (err) {
@@ -30,7 +30,7 @@ const selectUser = (username, callback) => {
   });
 };
 
-const updateReportCount = (username, callback) => {
+const updateReportCount = ({ username }, callback) => {
   let reportCount;
   selectUser(username, (err, res) => {
     if (err) {

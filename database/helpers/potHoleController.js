@@ -2,12 +2,13 @@
 const PotHole = require('../models/potHoles');
 
 const checkForMarker = ({ lat, long }, maxDistance, callback) => {
-  const greaterLat = Number.parseFloat(lat).toFixed(5) + maxDistance;
-  const lesserLat = Number.parseFloat(lat).toFixed(5) - maxDistance;
-  const greaterLong = Number.parseFloat(long).toFixed(5) + maxDistance;
-  const lesserLong = Number.parseFloat(long).toFixed(5) - maxDistance;
+  console.log(lat, long, 'this is lat and long');
+  const greaterLat = Number(Number.parseFloat(lat).toFixed(5)) + maxDistance;
+  const lesserLat = Number(Number.parseFloat(lat).toFixed(5)) - maxDistance;
+  const greaterLong = Number(Number.parseFloat(long).toFixed(5)) + maxDistance;
+  const lesserLong = Number(Number.parseFloat(long).toFixed(5)) - maxDistance;
 
-  PotHole.find().where('lat')
+  PotHole.findOne().where('lat')
     .gte(lesserLat)
     .lte(greaterLat)
     .where('long')
@@ -25,10 +26,11 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
     user,
   }, callback,
 ) {
-  checkForMarker({ lat, long }, 0.0001, (err, res) => {
+  checkForMarker({ lat, long }, Number(0.0001), (err, res) => {
+    console.log(res);
     if (err) {
       console.error(err);
-    } else if (res === null) {
+    } else if (res === null || !res.users.length) {
       const potHole = new PotHole({
         lat: Number.parseFloat(lat).toFixed(5),
         long: Number.parseFloat(long).toFixed(5),
@@ -44,7 +46,7 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
         }
         callback(errr);
       });
-    } else if (res.users.indexOf(user) !== -1) {
+    } else if (res.users.indexOf(user) === -1) {
       res.photos.push(photo);
       res.users.push(user);
       res.reported_count += 1;
