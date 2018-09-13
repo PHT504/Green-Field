@@ -35,7 +35,7 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
     long,
     rating,
     photo,
-    user,
+    username,
   }, callback,
 ) {
   checkForMarker({ lat, long }, Number(0.0001), (err, res) => {
@@ -44,12 +44,12 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
       console.error(err);
     } else if (res === null || !res.users.length) {
       const potHole = new PotHole({
-        lat: Number.parseFloat(lat).toFixed(5),
-        long: Number.parseFloat(long).toFixed(5),
+        lat: Number(Number.parseFloat(lat).toFixed(5)),
+        long: Number(Number.parseFloat(long).toFixed(5)),
         rating_mean: rating,
         reported_count: 1,
         photos: [photo],
-        users: [user],
+        users: [username],
       });
 
       potHole.save((errr) => {
@@ -58,9 +58,9 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
         }
         callback(errr);
       });
-    } else if (res.users.indexOf(user) === -1) {
+    } else if (res.users.indexOf(username) === -1) {
       res.photos.push(photo);
-      res.users.push(user);
+      res.users.push(username);
       res.reported_count += 1;
       res.rating_mean = (res.rating_mean + rating) / res.reported_count;
       PotHole.findOneAndUpdate({ lat: res.lat, long: res.long },
