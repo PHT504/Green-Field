@@ -17,6 +17,11 @@ const checkForMarker = ({ lat, long }, maxDistance, callback) => {
     .exec(callback);
 };
 
+module.exports.grabMarkers = (callback) => {
+  const query = PotHole.find();
+  query.select('-users').exec(callback);
+};
+
 module.exports.addPotHoleMarker = function addPotHoleMarker(
   {
     lat,
