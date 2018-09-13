@@ -17,6 +17,10 @@ const checkForMarker = ({ lat, long }, maxDistance, callback) => {
     .exec(callback);
 };
 
+module.exports.removeMarker = ({ lat, long }, callback) => {
+  PotHole.deleteOne({ lat, long }, callback);
+};
+
 module.exports.grabMarkers = (callback) => {
   const query = PotHole.find();
   query.select('-users').exec(callback);
