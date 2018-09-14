@@ -1,9 +1,19 @@
 const express = require('express');
+const fs = require('fs');
 const bodyParser = require('body-parser');
+// const passport = require('passport');
+const { createBundleRenderer } = require('vue-server-renderer');
+
 const parseurl = require('parseurl');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const bundleRenderer = createBundleRenderer(
+  require('../frontend/dist/vue-ssr-bundle.json'),
+  {
+    template: fs.readFileSync('./frontend/index.html', 'utf-8'),
+  },
+);
 
 // const cookieParser = require('cookie-parser');
 const UserDB = require('../database/helpers/userController');
@@ -35,13 +45,27 @@ app.use((req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
+<<<<<<< HEAD
 
 app.set('views', 'client'); // specify the views directory
 app.set('view engine', 'ejs');
+=======
+app.use('/dist', express.static('dist'));
+>>>>>>> 2873398c7093897ae5ce50d46b0fb7955865610c
 
+// app.set('views', 'frontend'); // specify the views directory
+// app.set('view engine', 'ejs');
 /*
 LOGIN ***** PRE AUTHENTICATION
 */
+// app.post('/login', (req, res) => {
+
+// });
+app.get('*', (req, res) => {
+  bundleRenderer.renderToStream({ url: req.path })
+    .pipe(res);
+});
+// /DURING THE SESSION
 app.get('/', (req, res) => {
   res.render('login');
 });
