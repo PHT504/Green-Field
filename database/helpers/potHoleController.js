@@ -1,26 +1,89 @@
-//this will be where much of the server does its interactions with the pot holes collection
+// this will be where much of the server does its interactions with the pot holes collection
 const PotHole = require('../models/potHoles');
+const userHelp = require('./userController');
 
+const checkForMarker = ({ lat, long }, maxDistance, callback) => {
+  console.log(lat, long, 'this is lat and long');
+  const greaterLat = Number(Number.parseFloat(lat).toFixed(5)) + maxDistance;
+  const lesserLat = Number(Number.parseFloat(lat).toFixed(5)) - maxDistance;
+  const greaterLong = Number(Number.parseFloat(long).toFixed(5)) + maxDistance;
+  const lesserLong = Number(Number.parseFloat(long).toFixed(5)) - maxDistance;
 
-module.exports.addPotHoleMarker = function ({ lat, long, rating_mean, last_reported, reported_count, photos, user}, callback){
-
-  const potHole = new PotHole({
-    lat,
-    long,
-    rating_mean,
-    reported_count,
-    last_reported,
-    photos,
-    users,
-  });
-
-  potHole.save(err=>{
-    if(err){
-      console.error(err);
-    }
-    callback(err);
-  })
-
+  PotHole.findOne().where('lat')
+    .gte(lesserLat)
+    .lte(greaterLat)
+    .where('long')
+    .gte(lesserLong)
+    .lte(greaterLong)
+    .exec(callback);
 };
 
+module.exports.removeMarker = ({ lat, long }, callback) => {
+  PotHole.deleteOne({ lat, long }, callback);
+};
 
+module.exports.grabMarkers = (callback) => {
+  const query = PotHole.find();
+  query.select('-users').exec(callback);
+  if (query.selected()) {
+    console.log('successfully selected markers!');
+  }
+};
+
+module.exports.addPotHoleMarker = function addPotHoleMarker(
+  {
+    lat,
+    long,
+    rating,
+    photo,
+    username,
+  }, callback,
+) {
+  checkForMarker({ lat, long }, Number(0.0001), (err, res) => {
+    if (err) {
+      console.error(err);
+    } else if (res === null || !res.users.length) {
+      userHelp.updateReportCount({ username }, (er, feedback) => {
+        if (er) {
+          console.error(er, ' line 49');
+        } else {
+          console.log(feedback, ' this is the feedback');
+        }
+      });
+      const potHole = new PotHole({
+        lat: Number(Number.parseFloat(lat).toFixed(5)),
+        long: Number(Number.parseFloat(long).toFixed(5)),
+        rating_mean: rating,
+        reported_count: 1,
+        photos: [photo],
+        users: [username],
+      });
+
+      potHole.save((errr) => {
+        if (errr) {
+          console.error(errr);
+        }
+        callback(errr);
+      });
+    } else if (res.users.indexOf(username) === -1) {
+      res.photos.push(photo);
+      res.users.push(username);
+      res.reported_count += 1;
+      res.rating_mean = (res.rating_mean + rating) / res.reported_count;
+      userHelp.updateReportCount({ username }, (er, feedback) => {
+        if (er) {
+          console.error(er, ' line 76');
+        } else {
+          console.log(feedback);
+        }
+      });
+      PotHole.findOneAndUpdate({ lat: res.lat, long: res.long },
+        {
+          users: res.users,
+          photos: res.photos,
+          reported_count: res.reported_count,
+          rating_mean: res.rating_mean,
+        }, callback);
+    }
+  });
+};
