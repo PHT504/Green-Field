@@ -2,8 +2,8 @@
 // server makes its interactions with the users collection for the time being
 const User = require('../models/users');
 
-const selectUser = ({ username }, callback) => {
-  User.where({ username }).findOne((err, res) => {
+const selectUser = ({ username, password }, callback) => {
+  User.where({ username, password }).findOne((err, res) => {
     if (err) {
       console.error(err);
       callback(err, res);
@@ -15,11 +15,12 @@ const selectUser = ({ username }, callback) => {
   });
 };
 
-const addUser = ({ username }, callback) => {
+const addUser = ({ username, password }, callback) => {
   selectUser({ username }, (er) => {
     if (er === 'not found') {
       const user = new User({
         username,
+        password,
         report_count: 0,
       });
       user.save((err) => {
