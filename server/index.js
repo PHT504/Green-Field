@@ -7,6 +7,7 @@ const UserDB = require('../database/helpers/userController');
 const PotHoleDB = require('../database/helpers/potHoleController');
 
 const app = express();
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.set('views', 'client'); // specify the views directory
 app.set('view engine', 'ejs');
