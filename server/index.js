@@ -45,13 +45,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
-<<<<<<< HEAD
-
-app.set('views', 'client'); // specify the views directory
-app.set('view engine', 'ejs');
-=======
 app.use('/dist', express.static('dist'));
->>>>>>> 2873398c7093897ae5ce50d46b0fb7955865610c
 
 // app.set('views', 'frontend'); // specify the views directory
 // app.set('view engine', 'ejs');
