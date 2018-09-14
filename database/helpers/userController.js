@@ -1,9 +1,10 @@
 // this is the user helper function that will be where the
 // server makes its interactions with the users collection for the time being
+// const bcrypt = require('bcryptjs');
 const User = require('../models/users');
 
-const selectUser = ({ username, password }, callback) => {
-  User.where({ username, password }).findOne((err, res) => {
+const selectUser = ({ username }, callback) => {
+  User.where({ username }).findOne((err, res) => {
     if (err) {
       console.error(err);
       callback(err, res);

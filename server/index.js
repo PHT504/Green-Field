@@ -33,6 +33,18 @@ app.post('/newUser', (req, res) => {
   res.sendStatus(201);
 });
 
+app.post('/login', (req, res) => {
+  UserDB.selectUser(req.body, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    } else if (bcrypt.compareSync(req.body.password, result.password)) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(403);
+    }
+  });
+});
 /*
 POST SUBMIT
 submit route that takes info from client and saves photo and geolocation to database
