@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 // DURING THE SESSION
 
-app.post('/login', (req, res) => {
+app.post('/newUser', (req, res) => {
   console.log(req.body);
   req.body.password = bcrypt.hashSync(req.body.password, 10);
 
