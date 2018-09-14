@@ -13,6 +13,7 @@ const options = require('../database/models/sessionStore');
 const app = express();
 // after reading the notes on express-session, it says cookie parser is no longer needed
 // app.use(cookieParser());
+// secret in honor of randy
 app.use(session({
   secret: 'find my p hole',
   saveUninitialized: false,
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
+
 app.set('views', 'client'); // specify the views directory
 app.set('view engine', 'ejs');
 
@@ -83,16 +85,19 @@ submit route that takes info from client and saves photo and geolocation to data
 */
 app.post('/submit', (req, res) => {
   console.log((req.body));
-
-  PotHoleDB.addPotHoleMarker(req.body, (err) => {
-    if (err) {
-      console.error(err);
-    } else {
-      // console.log(result);
-      console.log('we made a mark, pun intended');
-    }
-  });
-  res.sendStatus(201);
+  if (req.session.access) {
+    PotHoleDB.addPotHoleMarker(req.body, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        // console.log(result);
+        console.log('we made a mark, pun intended');
+      }
+    });
+    res.sendStatus(201);
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 app.listen('3000', () => console.log('listening on 3000'));
