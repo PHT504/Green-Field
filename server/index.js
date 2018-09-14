@@ -31,6 +31,7 @@ app.use(session({
   rolling: true,
   store: new MongoStore({ mongooseConnection: options.connection }),
 }));
+
 app.use((req, res, next) => {
   if (!req.session.views) {
     req.session.views = {};
@@ -92,7 +93,10 @@ app.post('/login', (req, res) => {
       res.sendStatus(200);
     } else {
       req.session.access = false;
-      res.sendStatus(403);
+      if (req.session.views['/login'] > 3) {
+        res.redirect('/newUser');
+      }
+      res.sendStatus(200);
     }
   });
 });
