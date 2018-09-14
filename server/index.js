@@ -94,6 +94,7 @@ app.post('/login', (req, res) => {
     } else {
       req.session.access = false;
       if (req.session.views['/login'] > 3) {
+        req.session.views['/login'] = 0;
         res.redirect('/newUser');
       }
       res.sendStatus(200);
