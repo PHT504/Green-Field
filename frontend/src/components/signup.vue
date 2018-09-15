@@ -2,19 +2,41 @@
 <div class ="hello">
 Sign-up
 <div class= 'holder'>
-<input type='text' placeholder='Username' v-model="signUp" >
-{{ signUp }}
+ <form class="" method="post" @submit.prevent="postNow">
+ <div>
+ <input type="text" name="" value="" v-model="signUp">
+ {{signUp}}
+ </div>
+  <input type="text" name="" value="" v-model="password">
+  {{password}}
+ <button type="submit" name="button">Submit</button>
+ </form>
+
 </div>
-</div>
+
+
 
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'signup',
+  obj: {},
   data () {
     return {
-      signUp: ''
+      signUp: '',
+      password: ''
+    };
+  },
+  methods:{
+    postNow() {
+      axios.post('/signup',{username: this.signup, password: this.password },
+        {headers: { 'Content-type': 'application/json' }}
+      ).then(response => {
+        console.log(response);
+      })
     }
   }
   

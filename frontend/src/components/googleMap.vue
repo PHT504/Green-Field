@@ -1,17 +1,17 @@
+
 <template>
   <div class="google-map" :id="mapName"></div>
 </template>
 
 <script>
 export default {
-  name: 'googleMap',
+  name: 'google-map',
   props: ['name'],
-  data: function () {
+  data  () {
     return {
       mapName: this.name + "-map",
     }
-  },
-    mounted: function () {
+  },  mounted :function() {
     const element = document.getElementById(this.mapName)
     const options = {
       zoom: 14,
@@ -19,6 +19,7 @@ export default {
     }
     const map = new google.maps.Map(element, options);
   }
+
 };
 </script>
 <style scoped>
@@ -26,6 +27,5 @@ export default {
   width: 800px;
   height: 600px;
   margin: 0 auto;
-  background: gray;
 }
 </style>
