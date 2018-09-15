@@ -29,7 +29,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: { maxAge: 60000 },
   rolling: true,
-  store: new MongoStore({ mongooseConnection: options.connection }),
+  store: new MongoStore({ mongooseConnection: options.connection, useNewUrlParser: true }),
 }));
 
 app.use((req, res, next) => {
@@ -91,6 +91,7 @@ app.post('/login', (req, res) => {
       res.sendStatus(500);
     } else if (bcrypt.compareSync(req.body.password, result.password)) {
       req.session.access = true;
+      res.redirect('/map');
       res.sendStatus(200);
     } else {
       req.session.access = false;
@@ -101,6 +102,24 @@ app.post('/login', (req, res) => {
       res.sendStatus(200);
     }
   });
+});
+
+app.get('/map', (req, res) => {
+  console.log(req.session.access);
+  if (req.session.access === true) {
+    PotHoleDB.grabMarkers((err, result) => {
+      if (err) {
+        console.error(err);
+        res.sendStatus(500);
+      } else {
+        res.status(200);
+        res.send(result);
+      }
+    });
+  } else {
+    res.redirect('/login');
+    res.sendStatus(403);
+  }
 });
 /*
 POST SUBMIT
