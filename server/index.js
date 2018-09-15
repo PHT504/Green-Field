@@ -23,13 +23,15 @@ const options = require('../database/models/sessionStore');
 const app = express();
 // after reading the notes on express-session, it says cookie parser is no longer needed
 // app.use(cookieParser());
+// secret in honor of randy
 app.use(session({
   secret: 'find my p hole',
   saveUninitialized: false,
   cookie: { maxAge: 60000 },
   rolling: true,
-  store: new MongoStore({ mongooseConnection: options.connection }),
+  store: new MongoStore({ mongooseConnection: options.connection, useNewUrlParser: true }),
 }));
+
 app.use((req, res, next) => {
   if (!req.session.views) {
     req.session.views = {};
@@ -66,7 +68,7 @@ app.get('/', (req, res) => {
 
 // DURING THE SESSION
 
-app.post('/newUser', (req, res) => {
+app.post('/signup', (req, res) => {
   console.log(req.body);
   req.body.password = bcrypt.hashSync(req.body.password, 10);
 
@@ -75,6 +77,7 @@ app.post('/newUser', (req, res) => {
       console.error(err);
     } else {
       console.log(result, ' we added a user with a encrypted password');
+      res.redirect('/login');
     }
   });
   res.sendStatus(201);
@@ -88,12 +91,35 @@ app.post('/login', (req, res) => {
       res.sendStatus(500);
     } else if (bcrypt.compareSync(req.body.password, result.password)) {
       req.session.access = true;
+      res.redirect('/map');
       res.sendStatus(200);
     } else {
       req.session.access = false;
-      res.sendStatus(403);
+      if (req.session.views['/login'] > 3) {
+        req.session.views['/login'] = 0;
+        res.redirect('/signup');
+      }
+      res.sendStatus(200);
     }
   });
+});
+
+app.get('/map', (req, res) => {
+  console.log(req.session.access);
+  if (req.session.access === true) {
+    PotHoleDB.grabMarkers((err, result) => {
+      if (err) {
+        console.error(err);
+        res.sendStatus(500);
+      } else {
+        res.status(200);
+        res.send(result);
+      }
+    });
+  } else {
+    res.redirect('/login');
+    res.sendStatus(403);
+  }
 });
 /*
 POST SUBMIT
@@ -102,16 +128,19 @@ submit route that takes info from client and saves photo and geolocation to data
 */
 app.post('/submit', (req, res) => {
   console.log((req.body));
-
-  PotHoleDB.addPotHoleMarker(req.body, (err) => {
-    if (err) {
-      console.error(err);
-    } else {
-      // console.log(result);
-      console.log('we made a mark, pun intended');
-    }
-  });
-  res.sendStatus(201);
+  if (req.session.access) {
+    PotHoleDB.addPotHoleMarker(req.body, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        // console.log(result);
+        console.log('we made a mark, pun intended');
+      }
+    });
+    res.sendStatus(201);
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 app.listen('3000', () => console.log('listening on 3000'));
