@@ -1,25 +1,27 @@
 <template>
-<div class ="hello">
-Sign-up
-<div class= 'holder'>
- <form class="" method="post" @submit.prevent="postNow">
- <div>
- <input type="text" name="" value="" v-model="signUp">
- {{signUp}}
- </div>
-  <input type="text" name="" value="" v-model="password">
-  {{password}}
- <button type="submit" name="button">Submit</button>
- </form>
-
-</div>
-
-
-
+  <div class ="hello">
+    Sign-up
+    <div class= 'holder'>
+      <form class="" method="post" @submit.prevent="postNow">
+        <div>
+          <input type="text" name="" value="" v-model="signUp">
+            {{signUp}}
+        </div>
+        <div>
+          <input type="text" name="" value="" v-model="password">
+            {{password}}
+        </div>
+        <div>
+          <button type="submit" name="button">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { log } from 'async';
 
 export default {
   name: 'signup',

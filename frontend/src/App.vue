@@ -3,7 +3,7 @@
   <signup/> 
   <login/>
   <googele-map name='example'/>
- 
+
 
   <GmapMap
   :center="{lat:10, lng:10}"
@@ -19,7 +19,7 @@
     :draggable="true"
     @click="center=m.position"
   />
-   </div>
+  </div>
 </template>
 
 <script>

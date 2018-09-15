@@ -61,10 +61,6 @@ app.get('*', (req, res) => {
     .pipe(res);
 });
 // /DURING THE SESSION
-app.get('/', (req, res) => {
-  res.render('login');
-});
-
 
 // DURING THE SESSION
 
