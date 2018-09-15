@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
 
 // DURING THE SESSION
 
-app.post('/newUser', (req, res) => {
+app.post('/signup', (req, res) => {
   console.log(req.body);
   req.body.password = bcrypt.hashSync(req.body.password, 10);
 
@@ -77,6 +77,7 @@ app.post('/newUser', (req, res) => {
       console.error(err);
     } else {
       console.log(result, ' we added a user with a encrypted password');
+      res.redirect('/login');
     }
   });
   res.sendStatus(201);
@@ -95,7 +96,7 @@ app.post('/login', (req, res) => {
       req.session.access = false;
       if (req.session.views['/login'] > 3) {
         req.session.views['/login'] = 0;
-        res.redirect('/newUser');
+        res.redirect('/signup');
       }
       res.sendStatus(200);
     }
