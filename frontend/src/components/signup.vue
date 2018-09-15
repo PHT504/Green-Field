@@ -1,35 +1,29 @@
 <template>
-  <div id="app">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-  <signup/> 
-  <login/>
-<googeleMap/>
-  </div>
+<div class ="hello">
+Sign-up
+<div class= 'holder'>
+<input type='text' placeholder='Username' v-model="signUp" >
+{{ signUp }}
+</div>
+</div>
+
 </template>
 
 <script>
-import signup from './components/signup.vue'
-import login from './components/login.vue'
-import googeleMap from './components/googleMap.vue'
 export default {
-  name: 'app',
-  components: {
-    signup,
-    login,
-    googeleMap
-  },
+  name: 'signup',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      signUp: ''
     }
   }
   
 }
-</script>
 
+</script>
 <style>
-#app {
+
+.hello {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -55,4 +49,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>
