@@ -98,8 +98,9 @@ app.post('/login', (req, res) => {
       if (req.session.views['/login'] > 3) {
         req.session.views['/login'] = 0;
         res.redirect('/signup');
+      } else {
+        res.sendStatus(200);
       }
-      res.sendStatus(200);
     }
   });
 });
