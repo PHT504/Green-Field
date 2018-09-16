@@ -11,9 +11,11 @@ const app = new Vue({
     postNow() {
       axios.post('/signup', { username: this.username, password: this.password }, { headers: { 'Content-type': 'application/json' } })
         .then( (data) => {
-          console.log(data);
-          
-          window.location.replace('/login');
+          console.log(data);         
+         // window.location.replace('/login');
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },
