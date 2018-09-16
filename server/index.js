@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 // const passport = require('passport');
-
+const fs = require('fs');
 const parseurl = require('parseurl');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-
+const Path = require('path');
 
 // const cookieParser = require('cookie-parser');
 const UserDB = require('../database/helpers/userController');
@@ -17,6 +17,8 @@ const app = express();
 // after reading the notes on express-session, it says cookie parser is no longer needed
 // app.use(cookieParser());
 // secret in honor of randy
+app.set('views', Path.join(__dirname, '../views'));
+app.set('view engine', 'ejs');
 app.use(session({
   secret: 'find my p hole',
   saveUninitialized: false,
@@ -39,7 +41,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
-app.use('/dist', express.static('dist'));
+app.use(express.static('views'));
 
 // app.set('views', 'frontend'); // specify the views directory
 // app.set('view engine', 'ejs');
@@ -65,8 +67,22 @@ app.post('/signup', (req, res) => {
       console.log(result, ' we added a user with a encrypted password');
       res.redirect('/login');
     }
+    // res.sendStatus(201);
   });
-  res.sendStatus(201);
+});
+app.get('/login', (req, res) => {
+  // res.write('login');
+  // res.end();
+  res.writeHead(200, { 'Content-type': 'text/html' });
+  fs.readFile(Path.join(__dirname, '../views/login.html'), null, (error, data) => {
+    if (error) {
+      console.error(error);
+      // res.writeHead(404);
+    } else {
+      res.write(data);
+    }
+    res.end();
+  });
 });
 
 app.post('/login', (req, res) => {

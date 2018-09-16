@@ -1,7 +1,7 @@
 
 
-const app = new Vue({
-  el: '#app',
+const login = new Vue({
+  el: '#login',
   data: {
     message: 'That\'s a shame',
     username: '',
@@ -9,7 +9,7 @@ const app = new Vue({
   },
   methods: {
     postNow() {
-      axios.post('/signup', { username: this.username, password: this.password }, { headers: { 'Content-type': 'application/json' } })
+      axios.post('/login', { username: this.username, password: this.password }, { headers: { 'Content-type': 'application/json' } })
         .then( (response) => {
           console.log(response);
         });
@@ -17,4 +17,4 @@ const app = new Vue({
   },
 });
 
-console.log(app.data);
+console.log(login.data);
