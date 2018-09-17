@@ -69,27 +69,15 @@ app.post('/signup', (req, res) => {
   });
 });
 
-app.get('/login', (req, res) => {
-  // res.write('login');
-  // res.end();
-  // res.writeHead(200, { 'Content-type': 'text/html' });
-  // fs.readFile(Path.join(__dirname, '../views/login.html'), null, (error, data) => {
-  //   if (error) {
-  //     console.error(error);
-  //     // res.writeHead(404);
-  //   } else {
-  //     res.write(data);
-  //   }
-  //   res.end();
-  // });
-  res.render('login');
-});
-app.get('/signup', (req, res) => {
-  // res.write('login');
-  // res.end();
-  res.writeHead(200, { 'Content-type': 'text/html' });
-  res.send('/login');
-});
+// app.get('/login', (req, res) => {
+//   res.render('login');
+// });
+// app.get('/signup', (req, res) => {
+//   // res.write('login');
+//   // res.end();
+//   res.writeHead(200, { 'Content-type': 'text/html' });
+//   res.send('/login');
+// });
 
 app.post('/login', (req, res) => {
   UserDB.selectUser(req.body, (err, result) => {
