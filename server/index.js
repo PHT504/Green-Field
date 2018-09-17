@@ -96,16 +96,16 @@ app.post('/login', (req, res) => {
     if (err) {
       console.error(err);
       req.session.access = false;
-      res.redirect('/signup');
+      // res.redirect('/signup');
     } else if (bcrypt.compareSync(req.body.password, result.password)) {
       req.session.access = true;
-      res.redirect('/map');
+      // res.redirect('/map');
       // res.sendStatus(200);
     } else {
       req.session.access = false;
       if (req.session.views['/login'] > 3) {
         req.session.views['/login'] = 0;
-        res.redirect('/signup');
+        // res.redirect('/signup');
       } else {
         res.sendStatus(200);
       }
@@ -126,7 +126,7 @@ app.get('/map', (req, res) => {
       }
     });
   } else {
-    res.redirect('/login');
+    // res.redirect('/login');
     res.sendStatus(403);
   }
 });
