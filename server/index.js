@@ -11,13 +11,14 @@ const MongoStore = require('connect-mongo')(session);
 const UserDB = require('../database/helpers/userController');
 const PotHoleDB = require('../database/helpers/potHoleController');
 const options = require('../database/models/sessionStore');
+// utils
+const { getCoords } = require('./utils.js');
 
 const app = express();
 // after reading the notes on express-session, it says cookie parser is no longer needed
 // app.use(cookieParser());
 // secret in honor of randy
-app.set('views', Path.join(__dirname, '../views'));
-app.set('view engine', 'ejs');
+
 app.use(session({
   secret: 'find my p hole',
   saveUninitialized: false,
@@ -70,19 +71,7 @@ app.post('/signup', (req, res) => {
     // res.sendStatus(201);
   });
 });
-app.get('/map', (req, res) => {
-  console.log('shit');
-  res.writeHead(200, { 'Content-type': 'text/html' });
-  fs.readFile(Path.join(__dirname, '../views/map.html'), null, (error, data) => {
-    if (error) {
-      console.error(error);
-      // res.writeHead(404);
-    } else {
-      res.write(data);
-    }
-    res.end();
-  });
-});
+
 app.get('/login', (req, res) => {
   // res.write('login');
   // res.end();
@@ -159,20 +148,31 @@ submit route that takes info from client and saves photo and geolocation to data
 
 */
 app.post('/submit', (req, res) => {
-  console.log((req.body));
-  if (req.session.access) {
-    PotHoleDB.addPotHoleMarker(req.body, (err) => {
-      if (err) {
-        console.error(err);
-      } else {
+
+  const { address } = req.body;
+  console.log(address);
+  let coords;
+  getCoords(address, (err, { body }) => {
+    if (err) {
+      console.error(err);
+    } const data = JSON.parse(body);
+    const { location } = data.results[0].geometry;
+    coords = location;
+    console.log(coords);
+    if (req.session.access) {
+      PotHoleDB.addPotHoleMarker(coords, (error) => {
+        if (error) {
+        console.error(error);
+        } else {
         // console.log(result);
         console.log('we made a mark, pun intended');
-      }
-    });
-    res.sendStatus(201);
-  } else {
-    res.sendStatus(403);
-  }
+        }
+      });
+      res.end();
+    } else {
+      res.sendStatus(403);
+    }
+  });
 });
 
 app.listen('3000', () => console.log('listening on 3000'));

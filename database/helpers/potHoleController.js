@@ -2,24 +2,24 @@
 const PotHole = require('../models/potHoles');
 const userHelp = require('./userController');
 
-const checkForMarker = ({ lat, long }, maxDistance, callback) => {
-  console.log(lat, long, 'this is lat and long');
+const checkForMarker = ({ lat, lng }, maxDistance, callback) => {
+  console.log(lat, lng, 'this is lat and long');
   const greaterLat = Number(Number.parseFloat(lat).toFixed(5)) + maxDistance;
   const lesserLat = Number(Number.parseFloat(lat).toFixed(5)) - maxDistance;
-  const greaterLong = Number(Number.parseFloat(long).toFixed(5)) + maxDistance;
-  const lesserLong = Number(Number.parseFloat(long).toFixed(5)) - maxDistance;
+  const greaterLong = Number(Number.parseFloat(lng).toFixed(5)) + maxDistance;
+  const lesserLong = Number(Number.parseFloat(lng).toFixed(5)) - maxDistance;
 
   PotHole.findOne().where('lat')
     .gte(lesserLat)
     .lte(greaterLat)
-    .where('long')
+    .where('lng')
     .gte(lesserLong)
     .lte(greaterLong)
     .exec(callback);
 };
 
-module.exports.removeMarker = ({ lat, long }, callback) => {
-  PotHole.deleteOne({ lat, long }, callback);
+module.exports.removeMarker = ({ lat, lng }, callback) => {
+  PotHole.deleteOne({ lat, lng }, callback);
 };
 
 module.exports.grabMarkers = (callback) => {
@@ -33,13 +33,13 @@ module.exports.grabMarkers = (callback) => {
 module.exports.addPotHoleMarker = function addPotHoleMarker(
   {
     lat,
-    long,
+    lng,
     rating,
     photo,
     username,
-  }, callback,
+  }, callback
 ) {
-  checkForMarker({ lat, long }, Number(0.0001), (err, res) => {
+  checkForMarker({ lat, lng }, Number(0.0001), (err, res) => {
     if (err) {
       console.error(err);
     } else if (res === null || !res.users.length) {
@@ -52,7 +52,7 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
       });
       const potHole = new PotHole({
         lat: Number(Number.parseFloat(lat).toFixed(5)),
-        long: Number(Number.parseFloat(long).toFixed(5)),
+        lng: Number(Number.parseFloat(lng).toFixed(5)),
         rating_mean: rating,
         reported_count: 1,
         photos: [photo],
