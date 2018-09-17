@@ -29,7 +29,10 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+<<<<<<< HEAD
     "google-map-react": "^1.0.6",
+=======
+>>>>>>> 9214b3287ddc0d765467e194ee29214a6ad23fed
     "history": "^4.7.2",
     "mongodb": "^3.1.4",
     "mongoose": "^5.2.14",

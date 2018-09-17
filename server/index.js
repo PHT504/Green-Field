@@ -18,7 +18,10 @@ const app = express();
 // after reading the notes on express-session, it says cookie parser is no longer needed
 // app.use(cookieParser());
 // secret in honor of randy
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9214b3287ddc0d765467e194ee29214a6ad23fed
 app.use(session({
   secret: 'find my p hole',
   saveUninitialized: false,
@@ -68,6 +71,7 @@ app.post('/signup', (req, res) => {
     } else {
       console.log(result, ' we added a user with a encrypted password');
     }
+<<<<<<< HEAD
     // res.sendStatus(201);
   });
 });
@@ -99,25 +103,39 @@ app.get('/signup', (req, res) => {
       res.write(data);
     }
     res.end();
+=======
+    res.sendStatus(201);
+>>>>>>> 9214b3287ddc0d765467e194ee29214a6ad23fed
   });
-  res.send('/login');
 });
+
+// app.get('/login', (req, res) => {
+//   res.render('login');
+// });
+// app.get('/signup', (req, res) => {
+//   // res.write('login');
+//   // res.end();
+//   res.writeHead(200, { 'Content-type': 'text/html' });
+//   res.send('/login');
+// });
 
 app.post('/login', (req, res) => {
   UserDB.selectUser(req.body, (err, result) => {
     if (err) {
       console.error(err);
       req.session.access = false;
-      res.redirect('/signup');
+      // res.redirect('/signup');
+      res.sendStatus(403);
     } else if (bcrypt.compareSync(req.body.password, result.password)) {
       req.session.access = true;
-      res.redirect('/map');
-      // res.sendStatus(200);
+      // res.redirect('/map');
+      res.sendStatus(200);
     } else {
       req.session.access = false;
       if (req.session.views['/login'] > 3) {
         req.session.views['/login'] = 0;
-        res.redirect('/signup');
+        // res.redirect('/signup');
+        res.sendStatus(403);
       } else {
         res.sendStatus(200);
       }
@@ -138,7 +156,7 @@ app.get('/map', (req, res) => {
       }
     });
   } else {
-    res.redirect('/login');
+    // res.redirect('/login');
     res.sendStatus(403);
   }
 });
@@ -175,5 +193,5 @@ app.post('/submit', (req, res) => {
   });
 });
 
-app.listen('3000', () => console.log('listening on 3000'));
+app.listen('80', () => console.log('listening on 3000'));
 module.exports = app;
