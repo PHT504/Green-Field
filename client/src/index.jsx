@@ -6,6 +6,7 @@ import MyMapComponent from './components/map.jsx'
 import SignupForm from './components/signup.jsx'
 import LoginForm from './components/login.jsx'
 import Address from './components/address.jsx'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,7 @@ class App extends React.Component {
 axios.get('/map')
 .then(res => {
   //push markers into array
-  console.log(res);
+  console.log(res,'should');
 });
   }
   render () {
