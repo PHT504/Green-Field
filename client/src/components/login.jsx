@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-
-class SignupForm extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,18 +24,18 @@ class SignupForm extends React.Component {
     alert('A name was submitted: ' + this.state.username + this.state.password);
     const user = {username: this.state.username, password: this.state.password}
     event.preventDefault();
-    axios.post(`/signup`, user )
-    .then(({data}) => {
+    axios.post(`/login`, user )
+    .then(res => {
+      console.log(res);
     })
   }
 
   render() {
     return (
       <div>   
-      <h1>Sign-in</h1>
-      <form onSubmit={this.handleSubmit}>
+        <h2>Login</h2>     
+        <form onSubmit={this.handleSubmit}>
         <label>
-        
           Username:
           <input type="text" value={this.state.username} onChange={this.handleChangeUser} />
         </label>
@@ -47,8 +46,8 @@ class SignupForm extends React.Component {
         <input type="submit" value="Submit" />
       </form>
       </div>
+
     );
   }
 }
-
-export default SignupForm
+export default LoginForm
