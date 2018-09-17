@@ -21,7 +21,7 @@ const MyMapComponent = compose(
       return <Marker position={element} />
     })}
   </GoogleMap>
- )
- }
+  )
+  }
 )
 export default MyMapComponent

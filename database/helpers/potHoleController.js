@@ -37,7 +37,7 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
     rating,
     photo,
     username,
-  }, callback
+  }, callback,
 ) {
   checkForMarker({ lat, lng }, Number(0.0001), (err, res) => {
     if (err) {

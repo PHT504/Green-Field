@@ -135,6 +135,7 @@ app.post('/submit', (req, res) => {
     if (err) {
       console.error(err);
     } const data = JSON.parse(body);
+    console.log(data, ' line 138');
     const { location } = data.results[0].geometry;
     coords = location;
     console.log(coords);
@@ -154,5 +155,5 @@ app.post('/submit', (req, res) => {
   });
 });
 
-app.listen('80', () => console.log('listening on 3000'));
+app.listen('3000', () => console.log('listening on 3000'));
 module.exports = app;
