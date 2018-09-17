@@ -67,7 +67,7 @@ app.post('/signup', (req, res) => {
       console.log(result, ' we added a user with a encrypted password');
     }
   });
-  res.sendStatus(201);
+  res.send('/login');
 });
 
 app.post('/login', (req, res) => {
