@@ -12,6 +12,11 @@ class SignupForm extends React.Component {
     this.handleChangeUser = this.handleChangeUser.bind(this);
     this.handleChangePass = this.handleChangePass.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.divStyle = {
+      margin: '40px',
+      border: '5px solid pink'
+    };
+
   }
 
   handleChangeUser(event) {
@@ -29,10 +34,11 @@ class SignupForm extends React.Component {
     .then(({data}) => {
     })
   }
+ 
 
   render() {
     return (
-      <div>   
+      <div style= {this.divStyle}>   
       <h1>Sign-in</h1>
       <form onSubmit={this.handleSubmit}>
         <label>
