@@ -152,5 +152,5 @@ app.post('/submit', (req, res) => {
   });
 });
 
-app.listen('80', () => console.log('listening on 3000'));
+app.listen('3000', () => console.log('listening on 3000'));
 module.exports = app;

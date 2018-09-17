@@ -18,9 +18,10 @@ class App extends React.Component {
 
   componentDidMount() {
 axios.get('/map')
-.then(res => {
+.then(({data}) => {
   //push markers into array
-  console.log(res,'should');
+  console.log(data);
+  
 });
   }
   render () {

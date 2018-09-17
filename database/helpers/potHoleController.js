@@ -77,7 +77,7 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
           console.log(feedback);
         }
       });
-      PotHole.findOneAndUpdate({ lat: res.lat, long: res.long },
+      PotHole.findOneAndUpdate({ lat: res.lat, lng: res.lng },
         {
           users: res.users,
           photos: res.photos,
