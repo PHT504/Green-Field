@@ -4,8 +4,8 @@ const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
 
 module.exports = (env) => {
-  console.log('NODE_ENV: ', env.NODE_ENV); // 'local'
-  console.log('Production: ', env.production); // true
+  console.log('MAP_API: ', env.MAP_API);
+  console.log('Production: ', env.production);
   return {
     entry: `${SRC_DIR}/index.jsx`,
     output: {
