@@ -4,8 +4,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 
 const MyMapComponent = compose(
   withProps({
-    googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAWaI8cSqRLwvcJtu4hbDZvK0c9b7EnM8Y',
-    loadingElement: <div style={{ height: `100%` }} />,
+    googleMapURL: ''
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),

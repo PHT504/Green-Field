@@ -126,7 +126,6 @@ submit route that takes info from client and saves photo and geolocation to data
 
 */
 app.post('/submit', (req, res) => {
-
   const { address } = req.body;
   console.log(address);
   let coords;
@@ -140,10 +139,10 @@ app.post('/submit', (req, res) => {
     if (req.session.access) {
       PotHoleDB.addPotHoleMarker(coords, (error) => {
         if (error) {
-        console.error(error);
+          console.error(error);
         } else {
         // console.log(result);
-        console.log('we made a mark, pun intended');
+          console.log('we made a mark, pun intended');
         }
       });
       res.end();
@@ -153,5 +152,5 @@ app.post('/submit', (req, res) => {
   });
 });
 
-app.listen('3000', () => console.log('listening on 3000'));
+app.listen('80', () => console.log('listening on 3000'));
 module.exports = app;
