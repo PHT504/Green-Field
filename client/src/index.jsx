@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { BrowserRouter, Route } from 'react-router-dom';
 import MyMapComponent from './components/map.jsx'
 import SignupForm from './components/signup.jsx'
 import LoginForm from './components/login.jsx'
@@ -26,12 +26,16 @@ axios.get('/map')
 
     return (<div>
       <h1></h1>
-      <SignupForm/>
-      <LoginForm/>
+      {/* <SignupForm/>
+      <LoginForm/> */}
       <Address/>
       <MyMapComponent props={this.state.items}/>
     </div>)
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<BrowserRouter>
+  <Route path='/' component={SignupForm}></Route>
+</BrowserRouter>, document.getElementById('app'));
+
+export default App

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-
+import  LoginForm from './login.jsx';
 class SignupForm extends React.Component {
   constructor(props) {
     super(props);
@@ -32,6 +32,9 @@ class SignupForm extends React.Component {
     event.preventDefault();
     axios.post(`/signup`, user )
     .then(({data}) => {
+     if(data === 'Created') {
+      ReactDOM.render(<LoginForm />, document.getElementById('app'));
+     }
     })
   }
  
