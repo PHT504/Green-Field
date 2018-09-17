@@ -1,12 +1,11 @@
 const express = require('express');
+
 const bodyParser = require('body-parser');
-// const passport = require('passport');
-const fs = require('fs');
+const path = require('path');
 const parseurl = require('parseurl');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const Path = require('path');
 
 // const cookieParser = require('cookie-parser');
 const UserDB = require('../database/helpers/userController');
@@ -41,10 +40,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
-app.use(express.static('views'));
+app.use(express.static(path.join(__dirname, '/../client/dist')));
 
-// app.set('views', 'frontend'); // specify the views directory
-// app.set('view engine', 'ejs');
+
 /*
 LOGIN ***** PRE AUTHENTICATION
 */
@@ -53,6 +51,9 @@ LOGIN ***** PRE AUTHENTICATION
 // });
 
 // /DURING THE SESSION
+app.get('/', (req, res) => {
+  res.end();
+});
 
 // DURING THE SESSION
 
@@ -65,7 +66,6 @@ app.post('/signup', (req, res) => {
       console.error(err);
     } else {
       console.log(result, ' we added a user with a encrypted password');
-      res.redirect('/login');
     }
     // res.sendStatus(201);
   });
@@ -111,6 +111,7 @@ app.get('/signup', (req, res) => {
     }
     res.end();
   });
+  res.send('/login');
 });
 
 app.post('/login', (req, res) => {
