@@ -98,15 +98,13 @@ app.post('/login', (req, res) => {
         req.session.views['/login'] = 0;
         // res.redirect('/signup');
         res.sendStatus(403);
-      } else {
-        res.sendStatus(200);
       }
     }
   });
 });
 
 app.get('/map', (req, res) => {
-  console.log(req.session.access);
+  // console..(req);
   if (req.session.access === true) {
     PotHoleDB.grabMarkers((err, result) => {
       if (err) {

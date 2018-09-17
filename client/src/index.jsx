@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { BrowserRouter, Route } from 'react-router-dom';
 import MyMapComponent from './components/map.jsx'
 import SignupForm from './components/signup.jsx'
 import LoginForm from './components/login.jsx'
 import Address from './components/address.jsx'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,19 +20,23 @@ class App extends React.Component {
 axios.get('/map')
 .then(res => {
   //push markers into array
-  console.log(res);
+  console.log(res,'should');
 });
   }
   render () {
 
     return (<div>
       <h1></h1>
-      <SignupForm/>
-      <LoginForm/>
+      {/* <SignupForm/>
+      <LoginForm/> */}
       <Address/>
       <MyMapComponent props={this.state.items}/>
     </div>)
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<BrowserRouter>
+  <Route path='/' component={SignupForm}></Route>
+</BrowserRouter>, document.getElementById('app'));
+
+export default App

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import App from '../index.jsx'
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -25,8 +26,12 @@ class LoginForm extends React.Component {
     const user = {username: this.state.username, password: this.state.password}
     event.preventDefault();
     axios.post(`/login`, user )
-    .then(res => {
-      console.log(res);
+    .then(({data}) => {
+      console.log(data);
+    if(data === 'OK') {
+     
+      ReactDOM.render(<App/> , document.getElementById('app'));
+    }
     })
   }
 
