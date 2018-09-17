@@ -18,7 +18,7 @@ const MyMapComponent = compose(
     defaultCenter={{ lat: 29.977543, lng: -90.075816}}
   >
 
-    {props.props[0].map(({lat,lng}) => {
+    {props.props.map(({lat,lng}) => {
       console.log(lat, lng);
       return <Marker position={{lat: lat, lng: lng}} />
     })}
