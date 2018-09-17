@@ -85,15 +85,17 @@ app.post('/login', (req, res) => {
       console.error(err);
       req.session.access = false;
       // res.redirect('/signup');
+      res.sendStatus(403);
     } else if (bcrypt.compareSync(req.body.password, result.password)) {
       req.session.access = true;
       // res.redirect('/map');
-      // res.sendStatus(200);
+      res.sendStatus(200);
     } else {
       req.session.access = false;
       if (req.session.views['/login'] > 3) {
         req.session.views['/login'] = 0;
         // res.redirect('/signup');
+        res.sendStatus(403);
       } else {
         res.sendStatus(200);
       }
