@@ -1,7 +1,7 @@
 /* create a helper function
-that makes an apit call to goole
+that makes an api call to google
 with a value that is a string of a location
-that then retturns the response object with the lat and log
+that then returns the response object with the lat and log
 */
 const request = require('request');
 
