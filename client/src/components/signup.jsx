@@ -24,7 +24,7 @@ class SignupForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.username + this.state.password);
+    // alert('A name was submitted: ' + this.state.username + this.state.password);
     const user = {username: this.state.username, password: this.state.password}
     event.preventDefault();
     axios.post(`/signup`, user )

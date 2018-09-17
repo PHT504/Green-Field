@@ -5,6 +5,7 @@ that then returns the response object with the lat and log
 */
 const request = require('request');
 
+const key = 'AIzaSyAWaI8cSqRLwvcJtu4hbDZvK0c9b7EnM8Y';
 const getCoords = (address, callback) => {
   const options = {
     headers: {

@@ -21,6 +21,7 @@ class Address extends React.Component {
     const address = {address: this.state.value} 
     axios.post(`/submit`, address )
     .then(res => {
+      console.log(props);
       console.log(res);
     }).catch(res=> {
       console.error(res);

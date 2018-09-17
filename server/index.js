@@ -112,6 +112,7 @@ app.get('/map', (req, res) => {
         res.sendStatus(500);
       } else {
         res.status(200);
+        console.log(result);
         res.send(result);
       }
     });
@@ -133,6 +134,7 @@ app.post('/submit', (req, res) => {
     if (err) {
       console.error(err);
     } const data = JSON.parse(body);
+    console.log(data, ' line 138');
     const { location } = data.results[0].geometry;
     coords = location;
     console.log(coords);

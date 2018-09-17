@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/27016');
+// mongoose.connect('mongodb://localhost/27016');
 
-// mongoose.connect(process.env.MONGO_LOC);
+mongoose.connect(process.env.MONGO_LOC || 'mongodb://localhost/27016');
 
 const { Schema } = mongoose;
 
@@ -15,7 +15,7 @@ db.once('open', () => {
 
 const potHoleRecords = new Schema({
   lat: Number,
-  long: Number,
+  lng: Number,
   rating_mean: Number,
   reported_count: Number,
   last_reported: { type: Date, default: Date.now },

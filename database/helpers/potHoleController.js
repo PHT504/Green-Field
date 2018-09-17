@@ -37,8 +37,9 @@ module.exports.addPotHoleMarker = function addPotHoleMarker(
     rating,
     photo,
     username,
-  }, callback
+  }, callback,
 ) {
+  console.log(lng, ' this is the lng being added');
   checkForMarker({ lat, lng }, Number(0.0001), (err, res) => {
     if (err) {
       console.error(err);
