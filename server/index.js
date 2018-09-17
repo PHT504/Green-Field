@@ -16,8 +16,6 @@ const app = express();
 // after reading the notes on express-session, it says cookie parser is no longer needed
 // app.use(cookieParser());
 // secret in honor of randy
-app.set('views', Path.join(__dirname, '../views'));
-app.set('view engine', 'ejs');
 app.use(session({
   secret: 'find my p hole',
   saveUninitialized: false,
@@ -67,22 +65,10 @@ app.post('/signup', (req, res) => {
     } else {
       console.log(result, ' we added a user with a encrypted password');
     }
-    // res.sendStatus(201);
+    res.sendStatus(201);
   });
 });
-app.get('/map', (req, res) => {
-  console.log('shit');
-  res.writeHead(200, { 'Content-type': 'text/html' });
-  fs.readFile(Path.join(__dirname, '../views/map.html'), null, (error, data) => {
-    if (error) {
-      console.error(error);
-      // res.writeHead(404);
-    } else {
-      res.write(data);
-    }
-    res.end();
-  });
-});
+
 app.get('/login', (req, res) => {
   // res.write('login');
   // res.end();
@@ -102,15 +88,6 @@ app.get('/signup', (req, res) => {
   // res.write('login');
   // res.end();
   res.writeHead(200, { 'Content-type': 'text/html' });
-  fs.readFile(Path.join(__dirname, '../views/index.html'), null, (error, data) => {
-    if (error) {
-      console.error(error);
-      // res.writeHead(404);
-    } else {
-      res.write(data);
-    }
-    res.end();
-  });
   res.send('/login');
 });
 
