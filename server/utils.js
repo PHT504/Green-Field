@@ -12,7 +12,7 @@ const getCoords = (address, callback) => {
       'Content-type': 'application/json',
     },
   };
-  request(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${key}`, options, callback);
+  request(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyA6drgghedMQixurnycyOqoO45qfyNiDzM`, options, callback);
 };
 
 module.exports.getCoords = getCoords;
