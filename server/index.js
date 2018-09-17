@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-
 // const cookieParser = require('cookie-parser');
 const UserDB = require('../database/helpers/userController');
 const PotHoleDB = require('../database/helpers/potHoleController');
@@ -17,6 +16,8 @@ const app = express();
 // after reading the notes on express-session, it says cookie parser is no longer needed
 // app.use(cookieParser());
 // secret in honor of randy
+app.set('views', Path.join(__dirname, '../views'));
+app.set('view engine', 'ejs');
 app.use(session({
   secret: 'find my p hole',
   saveUninitialized: false,
@@ -66,6 +67,21 @@ app.post('/signup', (req, res) => {
     } else {
       console.log(result, ' we added a user with a encrypted password');
     }
+    // res.sendStatus(201);
+  });
+});
+app.get('/login', (req, res) => {
+  // res.write('login');
+  // res.end();
+  res.writeHead(200, { 'Content-type': 'text/html' });
+  fs.readFile(Path.join(__dirname, '../views/login.html'), null, (error, data) => {
+    if (error) {
+      console.error(error);
+      // res.writeHead(404);
+    } else {
+      res.write(data);
+    }
+    res.end();
   });
   res.send('/login');
 });

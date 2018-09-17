@@ -38,6 +38,7 @@
     "react-google-maps": "^9.4.5",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "path": "^0.12.7",
     "save": "^2.3.2",
     "vue-server-renderer": "^2.5.17",
     "webpack-cli": "^3.1.0"
