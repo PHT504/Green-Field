@@ -18,10 +18,6 @@ const app = express();
 // after reading the notes on express-session, it says cookie parser is no longer needed
 // app.use(cookieParser());
 // secret in honor of randy
-<<<<<<< HEAD
-
-=======
->>>>>>> 9214b3287ddc0d765467e194ee29214a6ad23fed
 app.use(session({
   secret: 'find my p hole',
   saveUninitialized: false,
@@ -71,41 +67,7 @@ app.post('/signup', (req, res) => {
     } else {
       console.log(result, ' we added a user with a encrypted password');
     }
-<<<<<<< HEAD
-    // res.sendStatus(201);
-  });
-});
-
-app.get('/login', (req, res) => {
-  // res.write('login');
-  // res.end();
-  // res.writeHead(200, { 'Content-type': 'text/html' });
-  // fs.readFile(Path.join(__dirname, '../views/login.html'), null, (error, data) => {
-  //   if (error) {
-  //     console.error(error);
-  //     // res.writeHead(404);
-  //   } else {
-  //     res.write(data);
-  //   }
-  //   res.end();
-  // });
-  res.render('login');
-});
-app.get('/signup', (req, res) => {
-  // res.write('login');
-  // res.end();
-  res.writeHead(200, { 'Content-type': 'text/html' });
-  fs.readFile(Path.join(__dirname, '../views/index.html'), null, (error, data) => {
-    if (error) {
-      console.error(error);
-      // res.writeHead(404);
-    } else {
-      res.write(data);
-    }
-    res.end();
-=======
     res.sendStatus(201);
->>>>>>> 9214b3287ddc0d765467e194ee29214a6ad23fed
   });
 });
 
@@ -193,5 +155,5 @@ app.post('/submit', (req, res) => {
   });
 });
 
-app.listen('80', () => console.log('listening on 3000'));
+app.listen('3000', () => console.log('listening on 3000'));
 module.exports = app;
