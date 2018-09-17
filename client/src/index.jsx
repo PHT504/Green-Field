@@ -13,33 +13,18 @@ class App extends React.Component {
     this.state = { 
       items: []
     }
-    this.handleData = this.handleData.bind(this);
-    this.getMap = this.getMap.bind(this);
+    
 
   }
-  handleData(info) {
-    console.log(info);
-    this.setState(this.state.items.push(info));
-    ReactDOM.render(<MyMapComponent props={this.state.items}/>, document.getElementById('app') )
-  }
-  getMap() {
-    axios.get('/map')
-.then(({data}) => {
-  //push markers into array
-  console.log(data);
-  this.handleData(data);
-  
-});
 
-  }
+
 
   componentDidMount() {
 axios.get('/map')
 .then(({data}) => {
   //push markers into array
   console.log(data);
-  this.handleData(data);
-  
+  this.setState(this.state.items.push(data));
 });
 
   }
@@ -49,7 +34,7 @@ axios.get('/map')
       <h1></h1>
       {/* <SignupForm/>
       <LoginForm/> */}
-      <Address props={this.getMap}/>
+      <Address/>
       <MyMapComponent props={this.state.items}/>
     </div>)
   }
